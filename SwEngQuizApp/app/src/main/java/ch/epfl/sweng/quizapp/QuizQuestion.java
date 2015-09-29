@@ -51,7 +51,7 @@ public class QuizQuestion {
                 throw new NullPointerException("Answer is null");
             }
         }
-        if (solutionIndex < 0 || solutionIndex > answers.size()) {
+        if (solutionIndex < 0 || solutionIndex >= answers.size()) {
             throw new IllegalArgumentException("Invalid solutionIndex value");
         }
         for (String tag: tags) {
