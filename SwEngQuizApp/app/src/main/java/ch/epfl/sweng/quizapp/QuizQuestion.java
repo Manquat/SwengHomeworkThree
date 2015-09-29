@@ -119,15 +119,28 @@ public class QuizQuestion {
      */
     public static QuizQuestion parseFromJSON(JSONObject jsonObject) throws JSONException {
 
+        // Check that Strings are correct.
+        if (!(jsonObject.get("question") instanceof String) ||
+                !(jsonObject.get("owner") instanceof String)) {
+            throw new JSONException("Invalid question structure");
+        }
+
         JSONArray jsonAnswers = jsonObject.getJSONArray("answers");
         List<String> answers = new ArrayList<String>();        
         for (int i = 0; i < jsonAnswers.length(); ++i) {
+            // Check that Strings are correct.
+            if (!(jsonAnswers.get(i) instanceof String)) {
+                throw new JSONException("Invalid question structure");
+            }
             answers.add(jsonAnswers.getString(i));
         }
         
         JSONArray jsonTags = jsonObject.getJSONArray("tags");
         List<String> tags = new ArrayList<String>();
         for (int i = 0; i < jsonTags.length(); ++i) {
+            if (!(jsonTags.get(i) instanceof String)) {
+                throw new JSONException("Invalid question structure");
+            }
             tags.add(jsonTags.getString(i));
         }
         
