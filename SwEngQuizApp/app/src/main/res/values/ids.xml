@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <item name="questionBodyView" type="id"/>
+    <item name="answerGroup" type="id"/>
+    <item name="nextQuestionButton" type="id"/>
+    <item name="progressBar" type="id"/>
+
+</resources>
