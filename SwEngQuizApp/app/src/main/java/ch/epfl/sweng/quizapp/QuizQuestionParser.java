@@ -4,7 +4,8 @@ package ch.epfl.sweng.quizapp;
  * A QuizQuestionParser knows how to translate text into quiz questions. Parsers
  * may exist for a variety of formats, but they all share this common interface.
  */
-public interface QuizQuestionParser {
+public interface QuizQuestionParser
+{
     /**
      * Parses some text, and returns the created QuizQuestion.
      *

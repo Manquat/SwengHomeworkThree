@@ -3,7 +3,8 @@ package ch.epfl.sweng.quizapp;
 /**
  * This factory class knows about supported question formats.
  */
-public class QuizQuestionParserFactory {
+public class QuizQuestionParserFactory
+{
     /**
      * Obtains a parser for the given MIME type.
      *
@@ -15,7 +16,8 @@ public class QuizQuestionParserFactory {
      *             If no known parser supports this content type
      */
     public static QuizQuestionParser parserForContentType(String contentType)
-            throws NoSuchQuestionFormatException {
+            throws NoSuchQuestionFormatException
+    {
         // TODO: Implement formats
         throw new NoSuchQuestionFormatException();
     }

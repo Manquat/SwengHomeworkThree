@@ -3,10 +3,12 @@ package ch.epfl.sweng.quizapp;
 import java.util.Arrays;
 
 /** Parses questions in MarkDown format */
-public class MarkDownQuizQuestionParser implements QuizQuestionParser {
+public class MarkDownQuizQuestionParser implements QuizQuestionParser
+{
 
     @Override
-    public QuizQuestion parse(String s) throws QuizQuestionParseException {
+    public QuizQuestion parse(String s) throws QuizQuestionParseException
+    {
         // TODO: complete this method to parse the quiz question.
         // You may use whatever method you like, and can freely
         // add/delete/change code inside this method. Do not change the method
@@ -20,7 +22,8 @@ public class MarkDownQuizQuestionParser implements QuizQuestionParser {
         // QuizQuestionParseException if there are extra paragraphs, or not
         // enough.
         String[] parts = s.split("\\n\\n");
-        if (parts.length != 2) {
+        if (parts.length != 2)
+        {
             throw new QuizQuestionParseException();
         }
         //String bodyAndAttrs = parts[0];

@@ -14,16 +14,18 @@ import java.net.URL;
  * {@link HttpURLConnection} objects.
  *
  */
-public class DefaultNetworkProvider implements NetworkProvider {
+public class DefaultNetworkProvider implements NetworkProvider
+{
 
     /**
      * The default constructor.
      */
-    public DefaultNetworkProvider() {
-    }
+    public DefaultNetworkProvider()
+    {}
 
     @Override
-    public HttpURLConnection getConnection(URL url) throws IOException {
+    public HttpURLConnection getConnection(URL url) throws IOException
+    {
         return (HttpURLConnection) url.openConnection();
     }
 

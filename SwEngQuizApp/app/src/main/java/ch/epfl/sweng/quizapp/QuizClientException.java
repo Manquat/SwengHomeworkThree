@@ -9,19 +9,23 @@ package ch.epfl.sweng.quizapp;
  * communicating to the quiz server.
  *
  */
-public class QuizClientException extends Exception {
+public class QuizClientException extends Exception
+{
 
     private static final long serialVersionUID = 1L;
     
-    public QuizClientException() {
+    public QuizClientException()
+    {
         super();
     }
     
-    public QuizClientException(String message) {
+    public QuizClientException(String message)
+    {
         super(message);
     }
     
-    public QuizClientException(Throwable throwable) {
+    public QuizClientException(Throwable throwable)
+    {
         super(throwable);
     }
 }

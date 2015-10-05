@@ -17,7 +17,8 @@ import org.json.JSONObject;
  * Encapsulates the data in a quiz question returned by the SwEng server.
  *
  */
-public class QuizQuestion {
+public class QuizQuestion
+{
     private long mId;
     private String mOwner;
     private String mBody;
@@ -36,26 +37,35 @@ public class QuizQuestion {
      * @param tags a list of zero or more tags associated to the question
      */
     public QuizQuestion(long id, String owner, String body, List<String> answers,
-            int solutionIndex, List<String> tags) {
-        if (owner == null) {
+            int solutionIndex, List<String> tags)
+    {
+        if (owner == null)
+        {
             throw new NullPointerException("Owner is null");
         }
-        if (body == null) {
+        if (body == null)
+        {
             throw new NullPointerException("Body is null");
         }
-        if (answers.size() < 2) {
+        if (answers.size() < 2)
+        {
             throw new IllegalArgumentException("Answer list must be size two or more");
         }
-        for (String answer: answers) {
-            if (answer == null) {
+        for (String answer: answers)
+        {
+            if (answer == null)
+            {
                 throw new NullPointerException("Answer is null");
             }
         }
-        if (solutionIndex < 0 || solutionIndex > answers.size()) {
+        if (solutionIndex < 0 || solutionIndex > answers.size())
+        {
             throw new IllegalArgumentException("Invalid solutionIndex value");
         }
-        for (String tag: tags) {
-            if (tag == null) {
+        for (String tag: tags)
+        {
+            if (tag == null)
+            {
                 throw new NullPointerException("Tag is null");
             }
         }
@@ -71,42 +81,48 @@ public class QuizQuestion {
     /**
      * Returns the question ID.
      */
-    public long getID() {
+    public long getID()
+    {
         return mId;
     }
     
     /**
      * Returns the question owner.
      */
-    public String getOwner() {
+    public String getOwner()
+    {
         return mOwner;
     }
     
     /**
      * Returns the question body.
      */
-    public String getBody() {
+    public String getBody()
+    {
         return mBody;
     }
     
     /**
      * Returns a list of the question answers.
      */
-    public List<String> getAnswers() {
+    public List<String> getAnswers()
+    {
         return new ArrayList<String>(mAnswers);
     }
     
     /**
      * Returns the index of the solution in the answer list.
      */
-    public int getSolutionIndex() {
+    public int getSolutionIndex()
+    {
         return mSolutionIndex;
     }
     
     /**
      * Returns a (possibly empty) list of question tags.
      */
-    public List<String> getTags() {
+    public List<String> getTags()
+    {
         return new ArrayList<String>(mTags);
     }
     
@@ -117,21 +133,25 @@ public class QuizQuestion {
      * @return a new QuizQuestion object.
      * @throws JSONException in case of malformed JSON.
      */
-    public static QuizQuestion parseFromJSON(JSONObject jsonObject) throws JSONException {
+    public static QuizQuestion parseFromJSON(JSONObject jsonObject) throws JSONException
+    {
 
         JSONArray jsonAnswers = jsonObject.getJSONArray("answers");
         List<String> answers = new ArrayList<String>();        
-        for (int i = 0; i < jsonAnswers.length(); ++i) {
+        for (int i = 0; i < jsonAnswers.length(); ++i)
+        {
             answers.add(jsonAnswers.getString(i));
         }
         
         JSONArray jsonTags = jsonObject.getJSONArray("tags");
         List<String> tags = new ArrayList<String>();
-        for (int i = 0; i < jsonTags.length(); ++i) {
+        for (int i = 0; i < jsonTags.length(); ++i)
+        {
             tags.add(jsonTags.getString(i));
         }
         
-        try {
+        try
+        {
             return new QuizQuestion(
                     jsonObject.getLong("id"),
                     jsonObject.getString("owner"),
@@ -139,9 +159,13 @@ public class QuizQuestion {
                     answers,
                     jsonObject.getInt("solutionIndex"),
                     tags);
-        } catch (IllegalArgumentException e) {
+        }
+        catch (IllegalArgumentException e)
+        {
             throw new JSONException("Invalid question structure");
-        } catch (NullPointerException e) {
+        }
+        catch (NullPointerException e)
+        {
             throw new JSONException("Invalid question structure");
         }
     }

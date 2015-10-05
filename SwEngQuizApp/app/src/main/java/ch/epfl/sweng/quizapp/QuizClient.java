@@ -10,7 +10,8 @@ package ch.epfl.sweng.quizapp;
  * communication protocol and data formats.
  *
  */
-public interface QuizClient {
+public interface QuizClient
+{
     /**
      * 
      * @return A {@link QuizQuestion} object encapsulating a new random

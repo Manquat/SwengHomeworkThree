@@ -20,7 +20,8 @@ import android.util.Log;
  * communicate with a SwEng quiz server.
  *
  */
-public class NetworkQuizClient implements QuizClient {
+public class NetworkQuizClient implements QuizClient
+{
     private final String mServerUrl;
     private final NetworkProvider mNetworkProvider;
     
@@ -35,13 +36,16 @@ public class NetworkQuizClient implements QuizClient {
      * @param networkProvider a NetworkProvider object through which to channel
      * the server communication.
      */
-    public NetworkQuizClient(String serverUrl, NetworkProvider networkProvider) {
+    public NetworkQuizClient(String serverUrl, NetworkProvider networkProvider)
+    {
         mServerUrl = serverUrl;
         mNetworkProvider = networkProvider;
     }
     
-    public QuizQuestion fetchRandomQuestion() throws QuizClientException {
-        try {
+    public QuizQuestion fetchRandomQuestion() throws QuizClientException
+    {
+        try
+        {
             URL url = new URL(mServerUrl + "/quizquestions/random");
             HttpURLConnection conn = mNetworkProvider.getConnection(url);
             conn.setRequestMethod("GET");
@@ -49,27 +53,35 @@ public class NetworkQuizClient implements QuizClient {
             conn.connect();
             
             int response = conn.getResponseCode();
-            if (response < HTTP_SUCCESS_START || response > HTTP_SUCCESS_END) {
+            if (response < HTTP_SUCCESS_START || response > HTTP_SUCCESS_END)
+            {
                 throw new QuizClientException("Invalid HTTP response code");
             }
             JSONObject jsonObject = new JSONObject(fetchContent(conn));
             return QuizQuestion.parseFromJSON(jsonObject);
-        } catch (IOException e) {
+        }
+        catch (IOException e)
+        {
             throw new QuizClientException(e);
-        } catch (JSONException e) {
+        }
+        catch (JSONException e)
+        {
             throw new QuizClientException(e);
         }
     }
     
-    private String fetchContent(HttpURLConnection conn) throws IOException {
+    private String fetchContent(HttpURLConnection conn) throws IOException
+    {
         StringBuilder out = new StringBuilder();
         BufferedReader reader = null;
         
-        try {
+        try
+        {
             reader = new BufferedReader(new InputStreamReader(
                     conn.getInputStream()));
             String line;
-            while ((line = reader.readLine()) != null) {
+            while ((line = reader.readLine()) != null)
+            {
                 out.append(line);
             }
             
@@ -77,8 +89,11 @@ public class NetworkQuizClient implements QuizClient {
             Log.d("HTTPFetchContent", "Fetched string of length "
                     + result.length());
             return result;
-        } finally {
-            if (reader != null) {
+        }
+        finally
+        {
+            if (reader != null)
+            {
                 reader.close();
             }
         }

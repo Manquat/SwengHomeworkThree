@@ -13,7 +13,8 @@ import java.net.URL;
  * retrieve data from a given {@link URL}.
  *
  */
-public interface NetworkProvider {
+public interface NetworkProvider
+{
     /**
      * Returns a new {@link HttpURLConnection} object for the given {@link URL}.
      * 
