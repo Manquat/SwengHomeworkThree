@@ -57,14 +57,15 @@ public class NetworkQuizClient implements QuizClient
             {
                 throw new QuizClientException("Invalid HTTP response code");
             }
-            JSONObject jsonObject = new JSONObject(fetchContent(conn));
-            return QuizQuestion.parseFromJSON(jsonObject);
+
+            JsonQuizQuestionParser jsonQuizQuestionParser = new JsonQuizQuestionParser();
+            return jsonQuizQuestionParser.parse(fetchContent(conn));
         }
         catch (IOException e)
         {
             throw new QuizClientException(e);
         }
-        catch (JSONException e)
+        catch (QuizQuestionParseException e)
         {
             throw new QuizClientException(e);
         }
