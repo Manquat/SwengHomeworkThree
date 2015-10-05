@@ -19,6 +19,16 @@ public class QuizQuestionParserFactory
             throws NoSuchQuestionFormatException
     {
         // TODO: Implement formats
-        throw new NoSuchQuestionFormatException();
+        QuizQuestionParser quizQuestionParser;
+
+        switch (contentType.substring(0, contentType.indexOf(';')))
+        {
+            case "application/json":
+                quizQuestionParser = new JsonQuizQuestionParser();
+                break;
+            default:
+                throw new NoSuchQuestionFormatException();
+        }
+        return quizQuestionParser;
     }
 }
