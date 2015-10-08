@@ -1,5 +1,7 @@
 package ch.epfl.sweng.quizapp;
 
+import java.io.IOException;
+
 /**
  * This factory class knows about supported question formats.
  */
@@ -21,10 +23,18 @@ public class QuizQuestionParserFactory
         // TODO: Implement formats
         QuizQuestionParser quizQuestionParser;
 
+        // the given type is void
+        if (contentType == null)
+        {
+            throw new NoSuchQuestionFormatException();
+        }
+
         int index = contentType.indexOf(';');
+
+        // there is no indication of the character encoding
         if (index == -1)
         {
-            index = contentType.length() -1;
+            index = contentType.length() - 1;
         }
         switch (contentType.substring(0, index))
         {

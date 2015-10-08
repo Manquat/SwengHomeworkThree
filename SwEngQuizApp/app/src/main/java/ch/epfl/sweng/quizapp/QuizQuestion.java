@@ -58,12 +58,8 @@ public class QuizQuestion
                 throw new NullPointerException("Answer is null");
             }
         }
-<<<<<<< HEAD
-        if (solutionIndex < 0 || solutionIndex > answers.size())
+        if (solutionIndex < 0 || solutionIndex >= answers.size())
         {
-=======
-        if (solutionIndex < 0 || solutionIndex >= answers.size()) {
->>>>>>> remotes/OfficialGit/swengson
             throw new IllegalArgumentException("Invalid solutionIndex value");
         }
         for (String tag: tags)
@@ -147,31 +143,25 @@ public class QuizQuestion
         }
 
         JSONArray jsonAnswers = jsonObject.getJSONArray("answers");
-        List<String> answers = new ArrayList<String>();        
-<<<<<<< HEAD
+        List<String> answers = new ArrayList<String>();
         for (int i = 0; i < jsonAnswers.length(); ++i)
         {
-=======
-        for (int i = 0; i < jsonAnswers.length(); ++i) {
             // Check that Strings are correct.
-            if (!(jsonAnswers.get(i) instanceof String)) {
+            if (!(jsonAnswers.get(i) instanceof String))
+            {
                 throw new JSONException("Invalid question structure");
             }
->>>>>>> remotes/OfficialGit/swengson
             answers.add(jsonAnswers.getString(i));
         }
         
         JSONArray jsonTags = jsonObject.getJSONArray("tags");
         List<String> tags = new ArrayList<String>();
-<<<<<<< HEAD
+
         for (int i = 0; i < jsonTags.length(); ++i)
         {
-=======
-        for (int i = 0; i < jsonTags.length(); ++i) {
             if (!(jsonTags.get(i) instanceof String)) {
                 throw new JSONException("Invalid question structure");
             }
->>>>>>> remotes/OfficialGit/swengson
             tags.add(jsonTags.getString(i));
         }
         
