@@ -36,7 +36,8 @@ import static junit.framework.Assert.fail;
 /** Tests the NetworkQuizClient */
 @RunWith(AndroidJUnit4.class)
 @LargeTest
-public class NetworkQuizClientTest {
+public class NetworkQuizClientTest
+{
     private static final int ASCII_SPACE = 0x20;
     private static final int SAMPLE_QUESTION_ID = 17005;
     private static final String JSON_RESPONSE = "{\n"

@@ -21,7 +21,12 @@ public class QuizQuestionParserFactory
         // TODO: Implement formats
         QuizQuestionParser quizQuestionParser;
 
-        switch (contentType.substring(0, contentType.indexOf(';')))
+        int index = contentType.indexOf(';');
+        if (index == -1)
+        {
+            index = contentType.length() -1;
+        }
+        switch (contentType.substring(0, index))
         {
             case "application/json":
                 quizQuestionParser = new JsonQuizQuestionParser();
