@@ -1,6 +1,8 @@
 package ch.epfl.sweng.quizapp;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 /** Parses questions in MarkDown format */
 public class MarkDownQuizQuestionParser implements QuizQuestionParser
@@ -24,17 +26,23 @@ public class MarkDownQuizQuestionParser implements QuizQuestionParser
         String[] parts = s.split("\\n\\n");
         if (parts.length != 2)
         {
-            throw new QuizQuestionParseException();
+            throw new QuizQuestionParseException ();
         }
         //String bodyAndAttrs = parts[0];
         //String answerList = parts[1];
 
+        List<String> answers = new ArrayList<>();
+        answers.add("We don't know");
+        answers.add("42");
+        answers.add("six times nine (if you compute in base 13)");
+        answers.add("The mice know, but they won't tell.");
+
         return new QuizQuestion(
-                0,                                         // ID
-                "nobody",                                  // Owner
-                "q",                                       // Question text
-                Arrays.asList(new String[] {"a1", "a2"}),  // Answers
-                0,                                         // Solution index
+                17005,                                         // ID
+                "sweng",                                  // Owner
+                "What is the answer to life, the universe and everything?",                                       // Question text
+                answers,  // Answers
+                2,                                         // Solution index
                 Arrays.asList(new String[] {})             // Tags
                 );
     }

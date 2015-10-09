@@ -62,15 +62,7 @@ public class NetworkQuizClient implements QuizClient
                     QuizQuestionParserFactory.parserForContentType(conn.getContentType());
             return quizQuestionParser.parse(fetchContent(conn));
         }
-        catch (QuizQuestionParseException e)
-        {
-            throw new QuizClientException(e);
-        }
-        catch (NoSuchQuestionFormatException e)
-        {
-            throw new QuizClientException(e);
-        }
-        catch (IOException e)
+        catch (QuizQuestionParseException | NoSuchQuestionFormatException | IOException e)
         {
             throw new QuizClientException(e);
         }
@@ -88,7 +80,7 @@ public class NetworkQuizClient implements QuizClient
             String line;
             while ((line = reader.readLine()) != null)
             {
-                out.append(line);
+                out.append(line+"\n");
             }
             
             String result = out.toString();

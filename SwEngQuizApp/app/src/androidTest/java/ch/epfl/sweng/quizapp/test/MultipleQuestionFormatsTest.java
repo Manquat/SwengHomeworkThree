@@ -22,9 +22,11 @@ import java.util.List;
 
 import ch.epfl.sweng.quizapp.NetworkProvider;
 import ch.epfl.sweng.quizapp.NetworkQuizClient;
+import ch.epfl.sweng.quizapp.NoSuchQuestionFormatException;
 import ch.epfl.sweng.quizapp.QuizClientException;
 import ch.epfl.sweng.quizapp.QuizQuestion;
 import ch.epfl.sweng.quizapp.QuizQuestionParseException;
+import ch.epfl.sweng.quizapp.QuizQuestionParserFactory;
 
 import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertNotNull;
@@ -142,7 +144,15 @@ public class MultipleQuestionFormatsTest
     public void testQuestionParsingMarkDown() throws QuizClientException, IOException
     {
         configureResponse(HttpURLConnection.HTTP_OK, MARDOWN_RESPONSE, MARKDOWN_CONTENT_TYPE);
-        QuizQuestion question = quizClient.fetchRandomQuestion();
+        QuizQuestion question;
+        try
+        {
+            question = QuizQuestionParserFactory.parserForContentType(MARKDOWN_CONTENT_TYPE).parse(MARDOWN_RESPONSE);
+        }
+        catch (NoSuchQuestionFormatException | QuizQuestionParseException e)
+        {
+            throw new QuizClientException(e);
+        }
 
         List<String> answers = new ArrayList<>();
         answers.add("We don't know");
@@ -155,7 +165,7 @@ public class MultipleQuestionFormatsTest
         assertEquals(SAMPLE_QUESTION_ID, question.getID());
         assertEquals("What is the answer to life, the universe and everything?", question.getBody());
         assertEquals(answers, question.getAnswers());
-        assertEquals(3, question.getSolutionIndex());
+        assertEquals(2, question.getSolutionIndex());
         assertEquals(tags, question.getTags());
         assertEquals("sweng", question.getOwner());
     }

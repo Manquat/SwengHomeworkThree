@@ -34,12 +34,15 @@ public class QuizQuestionParserFactory
         // there is no indication of the character encoding
         if (index == -1)
         {
-            index = contentType.length() - 1;
+            index = contentType.length();
         }
         switch (contentType.substring(0, index))
         {
             case "application/json":
                 quizQuestionParser = new JsonQuizQuestionParser();
+                break;
+            case "text/markdown":
+                quizQuestionParser = new MarkDownQuizQuestionParser();
                 break;
             default:
                 throw new NoSuchQuestionFormatException();
