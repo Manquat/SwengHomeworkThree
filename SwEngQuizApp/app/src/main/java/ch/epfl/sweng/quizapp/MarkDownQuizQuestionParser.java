@@ -10,6 +10,7 @@ import java.util.regex.Pattern;
 public class MarkDownQuizQuestionParser implements QuizQuestionParser
 {
     static final String CORRECT_ANSWER_MARK = "[]{.icon-ok}";
+    static final String OWNER_MARK = "owner=";
 
     @Override
     public QuizQuestion parse(String s) throws QuizQuestionParseException
@@ -34,12 +35,64 @@ public class MarkDownQuizQuestionParser implements QuizQuestionParser
         String bodyAndAttrs = parts[0];
         String answerList = parts[1];
 
+        int index;
+        String owner;
+        List<String> answers;
+        int indexOfCorrectAnswer;
+
 
         //------------------------------------------------------------------------------------------
         // treatment of the question's part
 
-        String[] bodyAndAttrsPart = bodyAndAttrs.split("\\{.*\\}");
+        String[] bodyAndAttrsPart = bodyAndAttrs.split("\\{");
 
+        if (bodyAndAttrsPart.length != 2)
+        {
+            throw new QuizQuestionParseException();
+        }
+
+        String questionBody = normalize(bodyAndAttrsPart[0]);
+
+        int endBracket = bodyAndAttrsPart[1].indexOf('}');
+
+        // if the bracket is never close
+        if (endBracket == -1)
+        {
+            throw new QuizQuestionParseException();
+        }
+
+        String stringAttributes = bodyAndAttrsPart[1].substring(0, endBracket);
+
+        Pattern pId = Pattern.compile("#.* ");
+        Matcher mId = pId.matcher(stringAttributes);
+
+        // if there is no ID
+        if (!mId.find())
+        {
+            throw new QuizQuestionParseException();
+        }
+
+        // avoid the # and space character
+        String stringIndex = mId.group();
+        stringIndex = stringIndex.substring(1, stringIndex.length()-1);
+
+        try
+        {
+            index = Integer.parseInt(stringIndex);
+        }
+        catch (NumberFormatException e)
+        {
+            throw new QuizQuestionParseException();
+        }
+
+        int indexOfOwner = stringAttributes.indexOf(OWNER_MARK);
+        if (indexOfOwner == -1)
+        {
+            throw new QuizQuestionParseException();
+        }
+
+        owner = stringAttributes.substring(indexOfOwner + OWNER_MARK.length(),
+                stringAttributes.length());
 
         //------------------------------------------------------------------------------------------
         // treatment of the answer's part
@@ -55,8 +108,7 @@ public class MarkDownQuizQuestionParser implements QuizQuestionParser
             answerListString = tempString;
         }
 
-        int indexOfCorrectAnswer = -1;
-
+        indexOfCorrectAnswer = -1;
         for (int i = 0; i < answerListString.length; i++)
         {
             answerListString[i] = normalize(answerListString[i]);
@@ -76,23 +128,18 @@ public class MarkDownQuizQuestionParser implements QuizQuestionParser
             throw new QuizQuestionParseException();
         }
 
-        /*List<String> answers = new ArrayList<>();
-        answers.add("We don't know");
-        answers.add("42");
-        answers.add("six times nine (if you compute in base 13)");
-        answers.add("The mice know, but they won't tell.");*/
-        List<String> answers = Arrays.asList(answerListString);
+        answers = Arrays.asList(answerListString);
 
 
 
 
         return new QuizQuestion(
-                17005,                                         // ID
-                "sweng",                                  // Owner
-                "What is the answer to life, the universe and everything?",                                       // Question text
-                answers,  // Answers
-                indexOfCorrectAnswer,                      // Solution index
-                Arrays.asList(new String[] {})             // Tags
+                index,                                      // ID
+                owner,                                      // Owner
+                questionBody,                               // Question text
+                answers,                                    // Answers
+                indexOfCorrectAnswer,                       // Solution index
+                Arrays.asList(new String[] {})              // Tags
                 );
     }
 
