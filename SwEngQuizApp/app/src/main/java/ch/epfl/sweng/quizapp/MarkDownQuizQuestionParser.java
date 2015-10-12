@@ -72,9 +72,14 @@ public class MarkDownQuizQuestionParser implements QuizQuestionParser
             throw new QuizQuestionParseException();
         }
 
+
         // avoid the # and space character
         String stringIndex = mId.group();
         stringIndex = stringIndex.substring(1, stringIndex.length()-1);
+        if (stringIndex.length() == 0)
+        {
+            throw new QuizQuestionParseException();
+        }
 
         try
         {
@@ -117,6 +122,10 @@ public class MarkDownQuizQuestionParser implements QuizQuestionParser
             int tempIndex = answerListString[i].indexOf(CORRECT_ANSWER_MARK);
             if (tempIndex != -1)
             {
+                if (indexOfCorrectAnswer != -1)
+                {
+                    throw new QuizQuestionParseException();
+                }
                 indexOfCorrectAnswer = i;
                 answerListString[i] = answerListString[i].substring(CORRECT_ANSWER_MARK.length());
                 answerListString[i] = normalize(answerListString[i]);
